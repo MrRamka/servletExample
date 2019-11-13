@@ -40,4 +40,14 @@
         <filter-name>CountryFilter</filter-name>
         <url-pattern>/users</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <filter-name>BrowserFilter</filter-name>
+        <filter-class>ru.kpfu.filters.BrowserFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>BrowserFilter</filter-name>
+        <url-pattern>/registration</url-pattern>
+    </filter-mapping>
 </web-app>
