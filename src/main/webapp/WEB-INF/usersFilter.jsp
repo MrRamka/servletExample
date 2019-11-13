@@ -12,33 +12,46 @@
         <p>${user.toString()}</p>
     </c:forEach>
 
+    <%--<form class="form" method="POST" action="/users">--%>
+        <%--<label>Sort by</label>--%>
+        <%--<div class="form-group">--%>
+            <%--<div class="form-group">--%>
+                <%--<label for="user_country_select">Country select</label>--%>
+                <%--<select class="form-control" id="user_country_select" name="user_country_select">--%>
+                    <%--<option>Russia</option>--%>
+                    <%--<option>Spain</option>--%>
+                    <%--<option>Turkey</option>--%>
+                    <%--<option>Finland</option>--%>
+                    <%--<option>Any</option>--%>
+                <%--</select>--%>
+            <%--</div>--%>
+            <%--<div class="form-group">--%>
+                <%--<label for="user_sex_select">Country select</label>--%>
+                <%--<select class="form-control" id="user_sex_select" name="user_sex_select">--%>
+                    <%--<option>Male</option>--%>
+                    <%--<option>Female</option>--%>
+                    <%--<option>Any</option>--%>
+                <%--</select>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+        <%--<button type="submit" class="btn btn-primary">Sort</button>--%>
+    <%--</form>--%>
+
     <form class="form" method="POST" action="/users">
         <label>Sort by</label>
         <div class="form-group">
             <div class="form-group">
-                <label for="user_country_select">Country select</label>
-                <select class="form-control" id="user_country_select" name="user_country_select">
-                    <option>Russia</option>
-                    <option>Spain</option>
-                    <option>Turkey</option>
-                    <option>Finland</option>
-                    <option>Any</option>
+                <label for="user_sort_select">Country select</label>
+                <select class="form-control" id="user_sort_select" name="user_sort_select">
+                    <option>Country</option>
+                    <option>Sex</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="user_sex_select">Country select</label>
-                <select class="form-control" id="user_sex_select" name="user_sex_select">
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Any</option>
-                </select>
-            </div>
+
         </div>
         <button type="submit" class="btn btn-primary">Sort</button>
     </form>
-    <p>Sorted by</p>
-    <p>Country: ${country_cookie}</p>
-    <p>Sex: ${sex_cookie}</p>
+    <p>Sorted by: ${sortingMethod}</p>
 
 </div>
 </body>

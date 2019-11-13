@@ -1,13 +1,14 @@
 package ru.kpfu.filters;
 
 import ru.kpfu.servlets.User;
+import ru.kpfu.util.Reader;
 
 import javax.servlet.*;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,31 +21,14 @@ public class CountryFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
-        if(httpRequest.getMethod().equalsIgnoreCase("POST")) {
-            String sortByCountry = servletRequest.getParameter("user_country_select");
-            String sortBySex = servletRequest.getParameter("user_sex_select");
-            File f = new File("C:\\Users\\ramil\\Desktop\\servletExample\\src\\main\\java\\ru\\kpfu\\servlets\\users.csv");
-            Scanner scanner = new Scanner(f);
-            List<User> users = new ArrayList<>();
-            while (scanner.hasNextLine()) {
-                String raw_input = scanner.nextLine();
-                String[] items = raw_input.split(",");
-                String name = items[0];
-                String email = items[1];
-                String country = items[3];
-                boolean sex = items[4].equals("m");
-                String about = items[5];
-                boolean consentForDataProcessing = items[6].equals("on");
-                if (sortByCountry.equals("Any") && sortBySex.equals("Any")) {
-                    users.add(new User(name, email, country, sex, about, consentForDataProcessing));
-                }else if(country.equals(sortByCountry) && sortBySex.equals("Any")){
-                    users.add(new User(name, email, country, sex, about, consentForDataProcessing));
-                }else if(sortByCountry.equals("Any") && (sex ? "Male" : "Female").equalsIgnoreCase(sortBySex)){
-                    users.add(new User(name, email, country, sex, about, consentForDataProcessing));
-                }
-                else if (country.equals(sortByCountry) && (sex ? "Male" : "Female").equalsIgnoreCase(sortBySex)) {
-                    users.add(new User(name, email, country, sex, about, consentForDataProcessing));
-                }
+        if (httpRequest.getMethod().equalsIgnoreCase("POST")) {
+            String user_sort_select = servletRequest.getParameter("user_sort_select");
+            String fileName = "D:\\MAVEN_PROJECTS\\servletExample\\src\\main\\java\\ru\\kpfu\\servlets\\users.csv";
+            List<User> users = Reader.readUsers(fileName);
+            if (user_sort_select.equals("Country")) {
+                users.sort(Comparator.comparing(User::getCountry));
+            } else {
+                users.sort((o1, o2) -> o1.isSex() == o2.isSex() ? 0 : -1);
             }
             servletRequest.setAttribute("users", users);
         }
