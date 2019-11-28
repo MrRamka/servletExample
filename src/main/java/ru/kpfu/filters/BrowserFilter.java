@@ -15,7 +15,7 @@ public class BrowserFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         boolean filterFlag = httpRequest.getHeader("User-Agent").contains("OPR");
         if (filterFlag){
-            filterConfig.getServletContext().getRequestDispatcher("/WEB-INF/moz.jsp").forward(request, response);
+            filterConfig.getServletContext().getRequestDispatcher("/WEB-INF/opr.jsp").forward(request, response);
         }
         else{
             filterConfig.getServletContext().getRequestDispatcher("/WEB-INF/hello.jsp").forward(request, response);

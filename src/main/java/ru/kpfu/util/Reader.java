@@ -10,8 +10,6 @@ import java.util.Scanner;
 
 public class Reader {
     public static List<User> readUsers(String fileName) throws FileNotFoundException {
-
-
         File f = new File(fileName);
         Scanner scanner = new Scanner(f);
         List<User> users = new ArrayList<>();

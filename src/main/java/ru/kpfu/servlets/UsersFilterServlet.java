@@ -16,35 +16,47 @@ public class UsersFilterServlet extends HttpServlet {
         String fileName = "D:\\MAVEN_PROJECTS\\servletExample\\src\\main\\java\\ru\\kpfu\\servlets\\users.csv";
         List<User> users = Reader.readUsers(fileName);
         req.setAttribute("users", users);
-        Cookie sortCookie = new Cookie("sortCookie", "No_sorting_method");
-        resp.addCookie(sortCookie);
-        /*Cookie sex_cookie = new Cookie("Sex", "Any");
-        resp.addCookie(sex_cookie);*/
-        HttpSession httpSession = req.getSession();
-        httpSession.setAttribute("sortingMethod", "No_sorting_method");
+
+        Cookie sortCookie = findCookie(req, "sortCookie");
+
+        if (sortCookie != null) {
+            req.setAttribute("sortCookie", sortCookie.getValue());
+        } else {
+            sortCookie = new Cookie("sortCookie", "No_sorting_method");
+            sortCookie.setMaxAge(-1);
+            resp.addCookie(sortCookie);
+            req.setAttribute("sortCookie", sortCookie.getValue());
+        }
+
+//        HttpSession httpSession = req.getSession();
+//        httpSession.setAttribute("sortingMethod", "No_sorting_method");
 
 
-        req.setAttribute("sortCookie", sortCookie.getValue());
         getServletContext().getRequestDispatcher("/WEB-INF/usersFilter.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String sortSelector = req.getParameter("user_sort_select");
-       // Cookie sortCookie = findCookie(req, "sortCookie");
-        HttpSession httpSession = req.getSession();
+        Cookie sortCookie = findCookie(req, "sortCookie");
+//        HttpSession httpSession = req.getSession();
 
-//        if(sortCookie != null) {
-//            sortCookie.setValue(sortSelector);
-//            sortCookie.setMaxAge(-1);
-//            resp.addCookie(sortCookie);
-//        }
-        if (httpSession.getAttribute("sortingMethod") != null){
-            httpSession.setAttribute("sortingMethod", sortSelector);
-            req.setAttribute("sortingMethod", httpSession.getAttribute("sortingMethod"));
+        if (sortCookie != null) {
+            sortCookie.setValue(sortSelector);
+            sortCookie.setMaxAge(-1);
+            resp.addCookie(sortCookie);
+        } else {
+            sortCookie = new Cookie("sortCookie", sortSelector);
+            sortCookie.setMaxAge(-1);
+            resp.addCookie(sortCookie);
+            req.setAttribute("sortCookie", sortCookie.getValue());
         }
+//        if (httpSession.getAttribute("sortingMethod") != null){
+//            httpSession.setAttribute("sortingMethod", sortSelector);
+//            req.setAttribute("sortingMethod", httpSession.getAttribute("sortingMethod"));
+//        }
 
-        // req.setAttribute("sortingMethod", sortCookie.getValue());
+        req.setAttribute("sortingMethod", sortCookie.getValue());
 
         getServletContext().getRequestDispatcher("/WEB-INF/usersFilter.jsp").forward(req, resp);
     }

@@ -1,20 +1,20 @@
 package ru.kpfu.servlets;
 
 public class User {
+    private int id;
     private String name;
     private String email;
-    private String country;
-    private boolean sex;
-    private String about;
-    private boolean consentForDataProcessing;
+    private String pass;
 
-    public User(String name, String email, String country, boolean sex, String about, boolean consentForDataProcessing) {
+    public User(int id, String name, String email, String pass) {
+        this.id = id;
         this.name = name;
         this.email = email;
-        this.country = country;
-        this.sex = sex;
-        this.about = about;
-        this.consentForDataProcessing = consentForDataProcessing;
+        this.pass = pass;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -25,31 +25,7 @@ public class User {
         return email;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public boolean isSex() {
-        return sex;
-    }
-
-    public String getAbout() {
-        return about;
-    }
-
-    public boolean isConsentForDataProcessing() {
-        return consentForDataProcessing;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", country='" + country + '\'' +
-                ", sex=" + '\'' + (sex ? "Male" : "Female") + '\'' +
-                ", about='" + about + '\'' +
-                ", consentForDataProcessing=" + (consentForDataProcessing ? "Yes" : "No") +
-                '}';
+    public String getPass() {
+        return pass;
     }
 }
